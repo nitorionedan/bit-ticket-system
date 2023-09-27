@@ -4,14 +4,40 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/sheetselecting',
-      name: 'sheetselecting',
-      component: () => import('../views/SheetSelectingView.vue')
+      path: '/',
+      name: 'main',
+      component: () => import('../views/MainView.vue'),
+      meta: { title: '学習スペース提供サイト' }
     },
     {
-      path: '/reservationresult',
-      name: 'reservationresult',
-      component: () => import('../views/ReservationResultView.vue')
+      path: '/sheet-reservation',
+      name: 'sheet-reservation',
+      component: () => import('../views/SheetReservationView.vue'),
+      meta: { title: '座席を予約する' }
+    },
+    {
+      path: '/time-reservation:id',
+      name: 'time-reservation',
+      component: () => import('../views/TimeReservationView.vue'),
+      meta: { title: '時間予約' }
+    },
+    {
+      path: '/reserve:id',
+      name: 'reserve',
+      component: () => import('../views/ReserveView.vue'),
+      meta: { title: '予約完了' }
+    },
+    {
+      path: '/leaving-confirmation',
+      name: 'leaving-confirmation',
+      component: () => import('../views/LeavingConfirmationView.vue'),
+      meta: { title: '退席確認' }
+    },
+    {
+      path: '/complete-leaving',
+      name: 'complete-leaving',
+      component: () => import('../views/CompleteLeavingView.vue'),
+      meta: { title: '退席完了' }
     },
   ]
 })
