@@ -4,6 +4,37 @@ const sheetListB = Array(6).fill(0).map((_, i) => `B${i + 1}`);
 const sheetListC = Array(6).fill(0).map((_, i) => `C${i + 1}`);
 const sheetListD = Array(6).fill(0).map((_, i) => `D${i + 1}`);
 const redirectName = 'leaving-confirmation';
+
+// collect all reserved sheet id.
+let reservedSheetIds: String[] = [];
+sheetListA.forEach(id => {
+  const reservedInfo = localStorage.getItem(id);
+  if (reservedInfo !== null) {
+    reservedSheetIds.push(id);
+  }  
+});
+sheetListB.forEach(id => {
+  const reservedInfo = localStorage.getItem(id);
+  if (reservedInfo !== null) {
+    reservedSheetIds.push(id);
+  }  
+});
+sheetListC.forEach(id => {
+  const reservedInfo = localStorage.getItem(id);
+  if (reservedInfo !== null) {
+    reservedSheetIds.push(id);
+  }  
+});
+sheetListD.forEach(id => {
+  const reservedInfo = localStorage.getItem(id);
+  if (reservedInfo !== null) {
+    reservedSheetIds.push(id);
+  }  
+});
+
+function isAvairable(sheetId: String): boolean {
+  return !reservedSheetIds.includes(sheetId);
+}
 </script>
 
 <template>
@@ -13,7 +44,8 @@ const redirectName = 'leaving-confirmation';
       <tr>
         <td v-for="(sheetId, index) in sheetListA" :key="index">
           <RouterLink :to="{name: redirectName, params: { id: sheetId }}">
-            <button :id="sheetId">{{ sheetId }}</button>
+            <button v-if="isAvairable(sheetId)" class="avairable-sheet" :id="sheetId">{{ sheetId }}</button>
+            <button v-else :id="sheetId">{{ sheetId }}</button>
           </RouterLink>
         </td>
       </tr>
@@ -69,5 +101,9 @@ td button {
 #prev {
     width: 80px;
     height: 35px;
+}
+
+.avairable-sheet {
+  background-color: darkgrey;
 }
 </style>

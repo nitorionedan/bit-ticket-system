@@ -3,6 +3,38 @@ const sheetListA = Array(6).fill(0).map((_, i) => `A${i + 1}`);
 const sheetListB = Array(6).fill(0).map((_, i) => `B${i + 1}`);
 const sheetListC = Array(6).fill(0).map((_, i) => `C${i + 1}`);
 const sheetListD = Array(6).fill(0).map((_, i) => `D${i + 1}`);
+
+// collect all reserved sheet id.
+let reservedSheetIds: String[] = [];
+sheetListA.forEach(id => {
+  const reservedInfo = localStorage.getItem(id);
+  if (reservedInfo !== null) {
+    reservedSheetIds.push(id);
+  }  
+});
+sheetListB.forEach(id => {
+  const reservedInfo = localStorage.getItem(id);
+  if (reservedInfo !== null) {
+    reservedSheetIds.push(id);
+  }  
+});
+sheetListC.forEach(id => {
+  const reservedInfo = localStorage.getItem(id);
+  if (reservedInfo !== null) {
+    reservedSheetIds.push(id);
+  }  
+});
+sheetListD.forEach(id => {
+  const reservedInfo = localStorage.getItem(id);
+  if (reservedInfo !== null) {
+    reservedSheetIds.push(id);
+  }  
+});
+
+function isReserved(sheetId: String): boolean {
+  return reservedSheetIds.includes(sheetId);
+}
+
 </script>
 
 <template>
@@ -13,28 +45,32 @@ const sheetListD = Array(6).fill(0).map((_, i) => `D${i + 1}`);
         <tr>
           <td v-for="(sheetId, index) in sheetListA" :key="index">
             <RouterLink :to="{name: 'time-reservation', params: { id: sheetId }}">
-              <button :id="sheetId">{{ sheetId }}</button>
+              <button v-if="isReserved(sheetId)" class="reserved-sheet" :id="sheetId">{{ sheetId }}</button>
+              <button v-else :id="sheetId">{{ sheetId }}</button>
             </RouterLink>
           </td>
         </tr>
         <tr>
           <td v-for="(sheetId, index) in sheetListB" :key="index">
             <RouterLink :to="{name: 'time-reservation', params: { id: sheetId }}">
-              <button :id="sheetId">{{ sheetId }}</button>
+              <button v-if="isReserved(sheetId)" class="reserved-sheet" :id="sheetId">{{ sheetId }}</button>
+              <button v-else :id="sheetId">{{ sheetId }}</button>
             </RouterLink>
           </td>
         </tr>
         <tr>
           <td v-for="(sheetId, index) in sheetListC" :key="index">
             <RouterLink :to="{name: 'time-reservation', params: { id: sheetId }}">
-              <button :id="sheetId">{{ sheetId }}</button>
+              <button v-if="isReserved(sheetId)" class="reserved-sheet" :id="sheetId">{{ sheetId }}</button>
+              <button v-else :id="sheetId">{{ sheetId }}</button>
             </RouterLink>
           </td>
         </tr>
         <tr>
           <td v-for="(sheetId, index) in sheetListD" :key="index">
             <RouterLink :to="{name: 'time-reservation', params: { id: sheetId }}">
-              <button :id="sheetId">{{ sheetId }}</button>
+              <button v-if="isReserved(sheetId)" class="reserved-sheet" :id="sheetId">{{ sheetId }}</button>
+              <button v-else :id="sheetId">{{ sheetId }}</button>
             </RouterLink>
           </td>
         </tr>
@@ -48,25 +84,25 @@ const sheetListD = Array(6).fill(0).map((_, i) => `D${i + 1}`);
 
 <style scoped>
 div {
-    text-align: center;
-    font-size: 20px;
-    padding: 20px;
+  text-align: center;
+  font-size: 20px;
+  padding: 20px;
 }
 
 table {
-    margin: auto;
+  margin: auto;
 }
 
 td button {
   width: 75px;
-    height: 50px;
-    margin: 20px;
+  height: 50px;
+  margin: 20px;
 }
 
 input {
-    width: 75px;
-    height: 50px;
-    margin: 20px;
+  width: 75px;
+  height: 50px;
+  margin: 20px;
 }
 
 #prevlink {
@@ -74,7 +110,11 @@ input {
 }
 
 #prev {
-    width: 80px;
-    height: 35px;
+  width: 80px;
+  height: 35px;
+}
+
+.reserved-sheet {
+  background-color: darkgray;
 }
 </style>

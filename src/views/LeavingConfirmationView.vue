@@ -7,14 +7,23 @@ const route = useRoute();
 const sheetId = route.params.id;
 
 function onClickYesButton() {
-  localStorage.removeItem(sheetId);
+  localStorage.removeItem(sheetId as string);
   
   toast.success(`${sheetId}を退席しました。`);  
+}
+
+function isAvairableSheet(sheetId: string): boolean {
+  let item = localStorage.getItem(sheetId);
+  return item === null;
 }
 </script>
 
 <template>
-  <div>
+  <div v-if="isAvairableSheet(sheetId as string)">
+    この時間に予約がされていない席です。
+    <RouterLink to="/choosing-leaving-sheet"><button>退席する席を選ぶ</button></RouterLink>    
+  </div>
+  <div v-else>
     <h1>退席しますか？</h1>
     <RouterLink to="/">
       <button class="yes-button" @click="onClickYesButton">はい</button>
