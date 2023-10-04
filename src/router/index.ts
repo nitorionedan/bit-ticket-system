@@ -28,7 +28,13 @@ const router = createRouter({
       meta: { title: '予約完了' }
     },
     {
-      path: '/leaving-confirmation',
+      path: '/choosing-leaving-sheet',
+      name: 'choosing-leaving-sheet',
+      component: () => import('../views/ChoosingLeavingSheetView.vue'),
+      meta: { title: '退席する席を選ぶ' }
+    },
+    {
+      path: '/leaving-confirmation:id',
       name: 'leaving-confirmation',
       component: () => import('../views/LeavingConfirmationView.vue'),
       meta: { title: '退席確認' }

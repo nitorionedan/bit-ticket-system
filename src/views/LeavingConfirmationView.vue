@@ -1,14 +1,24 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
+import { useRoute } from "vue-router";
+import { useToast } from "vue-toastification";
 
-const router = useRouter();
-setTimeout(() => router.push('/'), 5000);
+const toast = useToast();
+const route = useRoute();
+const sheetId = route.params.id;
+
+function onClickYesButton() {
+  localStorage.removeItem(sheetId);
+  
+  toast.success(`${sheetId}を退席しました。`);  
+}
 </script>
 
 <template>
   <div>
     <h1>退席しますか？</h1>
-    <RouterLink to="/complete-leaving"><button class="yes-button">はい</button></RouterLink>
+    <RouterLink to="/">
+      <button class="yes-button" @click="onClickYesButton">はい</button>
+    </RouterLink>
     <RouterLink to="/"><button class="no-button">いいえ</button></RouterLink>
   </div>
 </template>

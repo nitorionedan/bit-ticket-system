@@ -4,10 +4,10 @@
 <template>
   <div>
     <h1>学習スペース提供サイト</h1>
-    <RouterLink to="sheet-reservation">
+    <RouterLink to="/sheet-reservation">
       <button class="reservation-button">座席を予約する</button>
     </RouterLink>
-    <RouterLink to="leaving-confirmation">
+    <RouterLink to="/choosing-leaving-sheet">
       <button class="leaving-button">退席する</button>
     </RouterLink>
   </div>

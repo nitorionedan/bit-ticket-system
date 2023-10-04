@@ -1,68 +1,95 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { useCookies } from 'vue3-cookies';
-// Declare start and end time list
-// const startTimeList = Array(13).map((_, i) => {
-//   const today = new Date();
-//   let date = new Date(today.getFullYear());
+import { useToast } from "vue-toastification";
 
-//   return `${i + 9}:00`;
-// });
 const route = useRoute();
-console.log(`sheet id is ${route.params.id}`);
 const sheetIdRef = ref(route.params.id);
+const toast = useToast();
 
-const { cookies } = useCookies();
-onMounted(() => {
-  console.log('mounted');
-  let my_cookie_value = cookies.get("myCoookie");
-    console.log(my_cookie_value);
-    cookies.set("myCoookie", "abcdefg");
-});
+// create options for start time and end time
+const startTimeOptions = createStartTimeOptions();
+const selectedStartTimeRef = ref(startTimeOptions[0]);
+
+const endTimeOptions = createEndTimeOptions();
+const selectedEndTimeRef = ref(endTimeOptions[0]);
+
+function zeroPad(num: number, places: number): String {
+  // console.log(zeroPad(5, 2)); // "05"
+  return String(num).padStart(places, '0');
+}
+
+function createStartTimeOptions(): String[] {
+  const today = new Date();
+  let startTime = new Date(today.getFullYear(), today.getMonth(), today.getDay(), 9, 0);
+  const startTimeOptions = Array(25).fill('').map(() => {
+    startTime = new Date(startTime.getFullYear(), startTime.getMonth(), startTime.getDay(), startTime.getHours(), startTime.getMinutes() + 30);
+    return `${startTime.getHours()}:${zeroPad(startTime.getMinutes(), 2)}`;
+  });
+
+  return startTimeOptions;
+}
+
+function createEndTimeOptions(): String[] {
+  const today = new Date();
+  let endTime = new Date(today.getFullYear(), today.getMonth(), today.getDay(), 9, 30);
+  const endTimeOptions = Array(25).fill('').map(() => {
+    endTime = new Date(endTime.getFullYear(), endTime.getMonth(), endTime.getDay(), endTime.getHours(), endTime.getMinutes() + 30);
+    return `${endTime.getHours()}:${zeroPad(endTime.getMinutes(), 2)}`;
+  });
+
+  return endTimeOptions;
+}
+
+function onClickReserveButton(): void {
+  // const parsedStartTime = String(selectedStartTimeRef.value).match(/^(?<minutes>\d+):(?<seconds>\d+)$/);
+  // let min = 0;
+  // let sec = 0;
+  // if (parsedStartTime !== null) {
+  //   min = parseInt(parsedStartTime.groups!.minutes, 10);
+  //   sec = parseInt(parsedStartTime.groups!.seconds, 10);
+  // }
+
+  const reservationTime = `${selectedStartTimeRef.value}-${selectedEndTimeRef.value}`;
+  console.log(reservationTime);
+  localStorage.setItem(sheetIdRef.value as string, reservationTime);
+  toast.success(`${route.params.id}を${selectedStartTimeRef.value}-${selectedEndTimeRef.value}で予約しました。`)
+}
+
+function isReserved(): boolean {
+  const item = localStorage.getItem(sheetIdRef.value as string);
+  return item !== null;
+}
 </script>
 
 <template>
-  <div>
+  <div v-if="isReserved()">
+    {{ sheetIdRef }}は予約済みです～
+    <RouterLink to="/sheet-reservation">
+      <button id="prev">席を選択する</button>
+    </RouterLink>
+  </div>
+  <div v-else>
     <h1>{{ sheetIdRef }}席の予約時間</h1>
     <div class="time-select">
-      <select>
-        <option value="9:00">9:00</option>   <option value="9:30">9:30</option>
-        <option value="10:00">10:00</option> <option value="10:30">10:30</option>
-        <option value="11:00">11:00</option> <option value="11:30">11:30</option>
-        <option value="12:00">12:00</option> <option value="12:30">12:30</option>
-        <option value="13:00">13:00</option> <option value="13:30">13:30</option>
-        <option value="14:00">14:00</option> <option value="14:30">14:30</option>
-        <option value="15:00">15:00</option> <option value="15:30">15:30</option>
-        <option value="16:00">16:00</option> <option value="16:30">16:30</option>
-        <option value="17:00">17:00</option> <option value="17:30">17:30</option>
-        <option value="18:00">18:00</option> <option value="18:30">18:30</option>
-        <option value="19:00">19:00</option> <option value="19:30">19:30</option>
-        <option value="20:00">20:00</option> <option value="20:30">20:30</option>
-        <option value="21:00">21:00</option> <option value="21:30">21:30</option>
+      <select v-model="selectedStartTimeRef">
+        <option v-for="(option, index) in startTimeOptions" :key="`${option}_${index}`" :value="option">
+          {{ option }}
+        </option>
       </select>
       <p>~</p>
-      <select>
-        <option value="9:30">9:30</option>
-        <option value="10:00">10:00</option> <option value="10:30">10:30</option>
-        <option value="11:00">11:00</option> <option value="11:30">11:30</option>
-        <option value="12:00">12:00</option> <option value="12:30">12:30</option>
-        <option value="13:00">13:00</option> <option value="13:30">13:30</option>
-        <option value="14:00">14:00</option> <option value="14:30">14:30</option>
-        <option value="15:00">15:00</option> <option value="15:30">15:30</option>
-        <option value="16:00">16:00</option> <option value="16:30">16:30</option>
-        <option value="17:00">17:00</option> <option value="17:30">17:30</option>
-        <option value="18:00">18:00</option> <option value="18:30">18:30</option>
-        <option value="19:00">19:00</option> <option value="19:30">19:30</option>
-        <option value="20:00">20:00</option> <option value="20:30">20:30</option>
-        <option value="21:00">21:00</option> <option value="21:30">21:30</option>
-        <option value="22:00">22:00</option>
+      <select v-model="selectedEndTimeRef">
+        <option v-for="(option, index) in endTimeOptions" :key="`${option}_${index}`" :value="option">
+          {{ option }}
+        </option>
       </select>
     </div>
-    <RouterLink :to="{ name: 'reserve', params: { id: '9:00-9:30' } }">
-      <button id="reserve">予約する</button>
+    <RouterLink to="/">
+      <button id="reserve" @click="onClickReserveButton">予約する</button>
     </RouterLink>
-    <RouterLink to="sheet-reservation"><button id="prev">席を選択する</button></RouterLink>
+    <RouterLink to="/sheet-reservation">
+      <button id="prev">席を選択する</button>
+    </RouterLink>
   </div>
 </template>
 

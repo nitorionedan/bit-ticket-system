@@ -6,9 +6,6 @@ const sheetListD = Array(6).fill(0).map((_, i) => `D${i + 1}`);
 </script>
 
 <template>
-  <head>
-    <title>座席を予約する</title>
-  </head>
   <div>
     <h1>予約する座席を選択してください</h1>
     <form action="時間予約.html" method="post">
@@ -60,14 +57,14 @@ table {
     margin: auto;
 }
 
-input {
-    width: 75px;
+td button {
+  width: 75px;
     height: 50px;
     margin: 20px;
 }
 
-td button {
-  width: 75px;
+input {
+    width: 75px;
     height: 50px;
     margin: 20px;
 }
