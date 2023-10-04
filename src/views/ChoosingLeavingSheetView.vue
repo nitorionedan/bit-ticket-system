@@ -52,21 +52,24 @@ function isAvairable(sheetId: String): boolean {
       <tr>
         <td v-for="(sheetId, index) in sheetListB" :key="index">
           <RouterLink :to="{name: redirectName, params: { id: sheetId }}">
-            <button :id="sheetId">{{ sheetId }}</button>
+            <button v-if="isAvairable(sheetId)" class="avairable-sheet" :id="sheetId">{{ sheetId }}</button>
+            <button v-else :id="sheetId">{{ sheetId }}</button>
           </RouterLink>
         </td>
       </tr>
       <tr>
         <td v-for="(sheetId, index) in sheetListC" :key="index">
           <RouterLink :to="{name: redirectName, params: { id: sheetId }}">
-            <button :id="sheetId">{{ sheetId }}</button>
+            <button v-if="isAvairable(sheetId)" class="avairable-sheet" :id="sheetId">{{ sheetId }}</button>
+            <button v-else :id="sheetId">{{ sheetId }}</button>
           </RouterLink>
         </td>
       </tr>
       <tr>
         <td v-for="(sheetId, index) in sheetListD" :key="index">
           <RouterLink :to="{name: redirectName, params: { id: sheetId }}">
-            <button :id="sheetId">{{ sheetId }}</button>
+            <button v-if="isAvairable(sheetId)" class="avairable-sheet" :id="sheetId">{{ sheetId }}</button>
+            <button v-else :id="sheetId">{{ sheetId }}</button>
           </RouterLink>
         </td>
       </tr>
