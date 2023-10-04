@@ -1,0 +1,1 @@
+import{_}from"./_plugin-vue_export-helper-c27b6911.js";import{o as s,c,p as d,b as a,d as o}from"./index-57c311a6.js";const n={},t=e=>(d("data-v-b4d15db6"),e=e(),a(),e),p=t(()=>o("h1",null,"退席しました。",-1)),i=t(()=>o("h3",null,"5秒後にメインページへ移動します。",-1)),l=[p,i];function r(e,u){return s(),c("div",null,l)}const b=_(n,[["render",r],["__scopeId","data-v-b4d15db6"]]);export{b as default};

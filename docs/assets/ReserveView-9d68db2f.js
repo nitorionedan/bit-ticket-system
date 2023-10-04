@@ -1,0 +1,1 @@
+import{e as a,g as r,r as s,o as n,c,j as e,t as u,u as m,a as p,w as l,F as _}from"./index-57c311a6.js";const x=a({__name:"ReserveView",setup(i){const t=r().params.id;return localStorage.setItem("A1","reserved"),(f,g)=>{const o=s("RouterLink");return n(),c(_,null,[e(u(m(t))+"で予約完了しましたー ",1),p(o,{to:"/"},{default:l(()=>[e("トップへ戻る")]),_:1})],64)}}});export{x as default};
